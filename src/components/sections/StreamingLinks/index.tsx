@@ -4,6 +4,7 @@ import {
     type TrackResponse,
 } from "@/types/streamingPlatforms";
 import LinkSection from "./LinkSection";
+import { tempAccent, withAlphaMix } from "@/utils/colors";
 
 type StreamingLinksProps =
     | {
@@ -28,9 +29,16 @@ const StreamingLinks = ({
 
     const platforms = Object.values(StreamingPlatforms);
 
+    const accentColor = tempAccent;
+
     return (
         <div className="flex flex-col items-center justify-center gap-8 p-6">
-            <div className="w-full max-w-sm overflow-hidden bg-white shadow-xl dark:bg-neutral-800">
+            <div
+                className="w-full max-w-sm overflow-hidden bg-white shadow-xl dark:bg-neutral-800"
+                style={{
+                    boxShadow: `0 8px 30px ${withAlphaMix(accentColor, 0.25)}`,
+                }}
+            >
                 <img
                     src={artworkUrl}
                     alt={title}

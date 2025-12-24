@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { initTheme } from "@/utils/theme";
 import { placeholderResponse } from "@/utils/placeholder";
-import StreamingLinks from "@/components/ui/sections/StreamingLinks";
+import StreamingLinks from "@/components/sections/StreamingLinks";
 
 export default function App() {
     useEffect(() => {

@@ -3,11 +3,14 @@ import {
     StreamingPlatforms,
     type StreamingPlatform,
 } from "@/types/streamingPlatforms";
+import { tempAccent, withAlphaMix } from "@/utils/colors";
 
 type LinkSectionProps = {
     platform: StreamingPlatform;
     url: string;
 };
+
+const accentColor = tempAccent;
 
 const LinkSection = ({ platform, url }: LinkSectionProps) => {
     if (!url) return null;
@@ -17,11 +20,16 @@ const LinkSection = ({ platform, url }: LinkSectionProps) => {
             target="_blank"
             rel="noreferrer"
             className="group flex flex-col items-center gap-1.5 p-3 transition-all hover:-translate-y-1 hover:shadow-lg"
+            style={
+                {
+                    "--tw-shadow-color": withAlphaMix(accentColor, 0.4),
+                } as React.CSSProperties
+            }
         >
             <StreamingPlatformIcon
                 platform={platform}
                 size={30}
-                className="transition-transform group-hover:scale-110"
+                className="transition-transform group-hover:scale-110 dark:text-white"
             />
             <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">
                 {platform === StreamingPlatforms.AppleMusic
