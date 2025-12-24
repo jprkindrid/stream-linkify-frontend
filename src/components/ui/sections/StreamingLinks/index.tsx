@@ -29,20 +29,31 @@ const StreamingLinks = ({
     const platforms = Object.values(StreamingPlatforms);
 
     return (
-        <div className="flex flex-col items-center justify-center gap-4 p-4">
-            <div className="overflow-clip rounded-md px-2 py-2 shadow-md">
-                <img src={artworkUrl} className="size-100" />
-                <h2 className="flex w-full flex-col items-start pb-2 text-2xl leading-none">
-                    <div className="text-lg font-semibold text-neutral-800 dark:text-neutral-400">
+        <div className="flex flex-col items-center justify-center gap-8 p-6">
+            <div className="w-full max-w-sm overflow-hidden bg-white shadow-xl dark:bg-neutral-800">
+                <img
+                    src={artworkUrl}
+                    alt={title}
+                    className="aspect-square w-full object-cover"
+                />
+                <div className="p-4">
+                    <p className="dark:text-neural-400 text-sm font-medium text-neutral-500">
                         {artistNames.join(", ")}
-                    </div>
-                    <div>{title}</div>
-                </h2>
+                    </p>
+                    <h2 className="text-xl font-bold text-neutral-900 dark:text-white">
+                        {title}
+                    </h2>
+                </div>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="sm:grid-cold-5 grid w-full max-w-md grid-cols-4 gap-3">
                 {platforms.map((platform) => {
-                    const url = streamingServices[platform];
-                    return <LinkSection platform={platform} url={url ?? ""} />;
+                    return (
+                        <LinkSection
+                            platform={platform}
+                            key={platform}
+                            url={streamingServices[platform] ?? ""}
+                        />
+                    );
                 })}
             </div>
         </div>

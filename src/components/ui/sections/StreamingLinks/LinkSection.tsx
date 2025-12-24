@@ -1,5 +1,8 @@
 import { StreamingPlatformIcon } from "@/components/icons/StreamingPlatformIcon";
-import type { StreamingPlatform } from "@/types/streamingPlatforms";
+import {
+    StreamingPlatforms,
+    type StreamingPlatform,
+} from "@/types/streamingPlatforms";
 
 type LinkSectionProps = {
     platform: StreamingPlatform;
@@ -7,20 +10,24 @@ type LinkSectionProps = {
 };
 
 const LinkSection = ({ platform, url }: LinkSectionProps) => {
+    if (!url) return null;
     return (
         <a
-            key={platform}
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="flex size-18 flex-col items-center justify-center rounded-md bg-neutral-100 shadow-md transition-all duration-300 hover:scale-105 hover:brightness-105 dark:bg-neutral-900 dark:shadow-neutral-700 dark:hover:brightness-120"
+            className="group flex flex-col items-center gap-1.5 p-3 transition-all hover:-translate-y-1 hover:shadow-lg"
         >
             <StreamingPlatformIcon
                 platform={platform}
                 size={30}
-                className="mb-1"
+                className="transition-transform group-hover:scale-110"
             />
-            <figcaption className="text-xs">{platform}</figcaption>
+            <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">
+                {platform === StreamingPlatforms.AppleMusic
+                    ? "Apple Music"
+                    : platform}
+            </span>
         </a>
     );
 };
