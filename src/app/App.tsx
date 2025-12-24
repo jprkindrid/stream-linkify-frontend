@@ -10,8 +10,9 @@ export default function App() {
 
     return (
         <div className="dark:bg-neutral-850 flex h-screen w-full justify-center bg-neutral-50 dark:bg-neutral-950">
-            <div className="my-24 max-w-2xl flex-col items-center justify-center border border-red-500">
+            <div className="my-24 max-w-6xl flex-col items-center justify-center border border-red-500">
                 <h1 className="text-4xl font-bold">Stream Linkify</h1>
+                {/* <p>Insert Link Insertion Here</p> */}
                 <div>
                     <StreamingLinks
                         responseType="tracks"
