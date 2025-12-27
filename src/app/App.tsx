@@ -1,11 +1,12 @@
-import { useEffect } from "react";
-import { initTheme } from "@/utils/theme";
 import { placeholderResponse } from "@/utils/placeholder";
 import StreamingLinks from "@/components/sections/StreamingLinks";
+import { useThemeContext } from "@/providers/themeProvider";
+import { useEffect } from "react";
 
 export default function App() {
+    const themeContext = useThemeContext();
     useEffect(() => {
-        initTheme();
+        themeContext.setTheme("system");
     }, []);
 
     return (
