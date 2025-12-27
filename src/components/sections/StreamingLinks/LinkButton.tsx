@@ -5,14 +5,14 @@ import {
 } from "@/types/streamingPlatforms";
 import { tempAccent, withAlphaMix } from "@/utils/colors";
 
-type LinkSectionProps = {
+type LinkButtonProps = {
     platform: StreamingPlatform;
     url: string;
 };
 
 const accentColor = tempAccent;
 
-const LinkSection = ({ platform, url }: LinkSectionProps) => {
+const LinkButton = ({ platform, url }: LinkButtonProps) => {
     if (!url) return null;
     return (
         <a
@@ -40,4 +40,4 @@ const LinkSection = ({ platform, url }: LinkSectionProps) => {
     );
 };
 
-export default LinkSection;
+export default LinkButton;
