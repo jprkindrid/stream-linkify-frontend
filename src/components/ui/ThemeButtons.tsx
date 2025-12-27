@@ -37,7 +37,7 @@ const ThemeButtons = () => {
                     <Icon
                         className={clsx(
                             "size-5 group-hover:text-white dark:group-hover:text-black",
-                            theme === mode && "text-amber-500"
+                            theme === mode && "text-accent"
                         )}
                     />
                 </button>

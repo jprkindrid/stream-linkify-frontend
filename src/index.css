@@ -6,4 +6,5 @@
 
 @theme {
     --font-inter: "Inter", sans-serif;
+    --color-accent: oklch(0.7 0.15 250);
 }

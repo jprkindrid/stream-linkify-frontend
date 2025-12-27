@@ -1,16 +1,32 @@
 import { tempAccent, type LCH } from "@/utils/colors";
-import { createContext, useContext, type ReactNode } from "react";
+import {
+    createContext,
+    useContext,
+    useLayoutEffect,
+    useState,
+    type ReactNode,
+} from "react";
 
 type AccentContextType = {
     accentColor: LCH;
+    setAccentColor: React.Dispatch<React.SetStateAction<LCH>>;
 };
 
 const AccentContext = createContext<AccentContextType | undefined>(undefined);
 
 export const AccentProvider = ({ children }: { children: ReactNode }) => {
-    const accentColor = tempAccent;
+    const [accentColor, setAccentColor] = useState<LCH>(tempAccent);
+
+    useLayoutEffect(() => {
+        const { l, c, h } = accentColor;
+        document.documentElement.style.setProperty(
+            "--color-accent",
+            `oklch(${l} ${c} ${h})`
+        );
+    }, [accentColor]);
+
     return (
-        <AccentContext.Provider value={{ accentColor }}>
+        <AccentContext.Provider value={{ accentColor, setAccentColor }}>
             {children}
         </AccentContext.Provider>
     );
