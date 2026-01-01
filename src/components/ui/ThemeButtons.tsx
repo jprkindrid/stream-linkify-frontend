@@ -1,4 +1,3 @@
-import { useAccentContext } from "@/providers/accentProviders";
 import { useThemeContext, type ThemeMode } from "@/providers/themeProvider";
 import {
     SunIcon,
@@ -15,7 +14,6 @@ type ThemeButton = {
 
 const ThemeButtons = () => {
     const { theme, setTheme } = useThemeContext();
-    const { accentColor } = useAccentContext();
 
     const buttons: ThemeButton[] = [
         { mode: "light", Icon: SunIcon },
