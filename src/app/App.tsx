@@ -19,10 +19,22 @@ export default function App() {
                 <LayoutGroup>
                     <div className="flex min-h-screen flex-col items-center gap-8">
                         {/* Spacer for animation reasons in lieu of a justify-center */}
+
                         <motion.div
-                            animate={{ height: tempButton ? "20vh" : "45vh" }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            animate={{ height: tempButton ? "20vh" : "40vh" }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
                         />
+                        {!tempButton && (
+                            <div className="flex flex-col items-center gap-2">
+                                <p className="text-2xl font-bold">
+                                    Paste a link to get started
+                                </p>
+                                <p className="text-sm text-neutral-500">
+                                    Supports Spotify, Apple Music, Deezer, and
+                                    Tidal
+                                </p>
+                            </div>
+                        )}
                         <motion.div
                             layout
                             animate={{ scale: tempButton ? 0.8 : 1 }}
@@ -40,8 +52,7 @@ export default function App() {
                                     layout
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.2 }}
+                                    transition={{ duration: 0.3 }}
                                     className="flex flex-col items-center justify-center gap-8 p-6"
                                 >
                                     <ArtworkCard

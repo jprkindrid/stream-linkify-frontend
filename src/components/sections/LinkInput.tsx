@@ -38,9 +38,9 @@ const LinkInput = () => {
                     </button>
                 </div>
                 <input
-                    className="focus-visible:ring-accent flex-1 bg-neutral-300 p-2 text-neutral-800 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset dark:bg-neutral-700 dark:text-neutral-200"
+                    className="focus-visible:ring-accent flex-1 bg-neutral-300 p-2 text-neutral-800 placeholder:text-neutral-500 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset dark:bg-neutral-700 dark:text-neutral-200"
                     type="text"
-                    placeholder="https://musicstreamingservice.com/share-link"
+                    placeholder="https://music.apple.com/us/song/..."
                     value={inputLink}
                     onChange={(e) => setInputLink(e.target.value)}
                 />
