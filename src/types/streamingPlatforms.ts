@@ -18,3 +18,5 @@ export type TrackResponse = {
 export type AlbumResponse = Omit<TrackResponse, "songName"> & {
     albumName: string;
 };
+
+export type TrackOrAlbum = "track" | "album";
