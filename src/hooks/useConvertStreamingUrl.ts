@@ -31,5 +31,8 @@ export function useStreamingQuery<T extends TrackOrAlbum>(
             return res.json();
         },
         enabled: url.length > 0,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        staleTime: Infinity,
     });
 }
