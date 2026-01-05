@@ -3,16 +3,32 @@ import StreamingLinks from "@/components/sections/StreamingLinks";
 import ArtworkCard from "@/components/sections/ArtworkCard";
 import ThemeButtons from "@/components/ui/ThemeButtons";
 import LinkInput from "@/components/sections/LinkInput";
-import { AnimatePresence, motion, LayoutGroup } from "motion/react";
+import { AnimatePresence, motion, LayoutGroup, spring } from "motion/react";
+import type { Transition, MotionProps } from "motion/react";
 import { useState } from "react";
 import { useStreamingQuery } from "@/hooks/useConvertStreamingUrl";
 import type { TrackOrAlbum } from "@/types/streamingPlatforms";
 import { type QueryStatus } from "@tanstack/react-query";
+import HeroText from "@/components/sections/HeroText";
+import DevControls from "@/components/sections/DevControls";
 
 interface SubmittedQuery {
     url: string;
     type: TrackOrAlbum;
 }
+
+const fadeScale = {
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.95 },
+    transition: { duration: 0.3 },
+} satisfies MotionProps;
+
+const springTransition = {
+    type: "spring",
+    stiffness: 300,
+    damping: 30,
+} satisfies Transition;
 
 export default function App() {
     const [submittedQuery, setSubmittedQuery] = useState<SubmittedQuery>({
@@ -32,7 +48,9 @@ export default function App() {
     const handleSubmit = (url: string, type: TrackOrAlbum) => {
         setSubmittedQuery({ url, type });
     };
+
     const linkResponse = data ?? placeholderResponse;
+
     const [devOverride, setDevOverride] = useState<QueryStatus | null>(null);
     const displayStatus = devOverride ?? status;
     const showResults = displayStatus == "success";
@@ -51,25 +69,11 @@ export default function App() {
                             animate={{ height: showResults ? "20vh" : "40vh" }}
                             transition={{ duration: 0.3, ease: "easeOut" }}
                         />
-                        {!showResults && (
-                            <div className="flex flex-col items-center gap-2">
-                                <p className="text-2xl font-bold">
-                                    Paste a link to get started
-                                </p>
-                                <p className="text-sm text-neutral-500">
-                                    Supports Spotify, Apple Music, Deezer, and
-                                    Tidal
-                                </p>
-                            </div>
-                        )}
+                        {!showResults && <HeroText />}
                         <motion.div
                             layout
                             animate={{ scale: showResults ? 0.8 : 1 }}
-                            transition={{
-                                type: "spring",
-                                stiffness: 300,
-                                damping: 30,
-                            }}
+                            transition={springTransition}
                         >
                             <LinkInput
                                 onSubmit={handleSubmit}
@@ -80,9 +84,7 @@ export default function App() {
                             {displayStatus == "success" && (
                                 <motion.div
                                     layout
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ duration: 0.3 }}
+                                    {...fadeScale}
                                     className="flex flex-col items-center justify-center gap-8 p-6"
                                 >
                                     <ArtworkCard
@@ -102,31 +104,10 @@ export default function App() {
             </div>
             {/* Dev controls */}
             {import.meta.env.DEV && (
-                <div className="fixed bottom-4 left-4 flex gap-1 rounded bg-neutral-800 p-1 text-sm">
-                    <button
-                        onClick={() => setDevOverride(null)}
-                        className={`rounded px-2 py-1 ${
-                            devOverride === null
-                                ? "bg-accent text-white"
-                                : "text-neutral-400 hover:text-white"
-                        }`}
-                    >
-                        real
-                    </button>
-                    {(["pending", "success", "error"] as const).map((s) => (
-                        <button
-                            key={s}
-                            onClick={() => setDevOverride(s)}
-                            className={`rounded px-2 py-1 ${
-                                devOverride === s
-                                    ? "bg-accent text-white"
-                                    : "text-neutral-400 hover:text-white"
-                            }`}
-                        >
-                            {s}
-                        </button>
-                    ))}
-                </div>
+                <DevControls
+                    setDevOverride={setDevOverride}
+                    devOverride={devOverride}
+                />
             )}
         </div>
     );
