@@ -1,16 +1,27 @@
-import { useState } from "react";
+import type { TrackOrAlbum } from "@/types/streamingPlatforms";
 import clsx from "clsx";
+import React, { useState } from "react";
 
-const LinkInput = () => {
+interface LinkInputProps {
+    onSubmit: (url: string, type: TrackOrAlbum) => void;
+    isLoading?: boolean;
+}
+
+const LinkInput = ({ onSubmit, isLoading }: LinkInputProps) => {
     const [inputLink, setInputLink] = useState("");
     const [isTrack, setIsTrack] = useState(true);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (inputLink.trim()) {
+            onSubmit(inputLink, isTrack ? "track" : "album");
+        }
+    };
 
     return (
         <form
             className="flex w-2xl flex-col items-center"
-            onSubmit={(e) => {
-                e.preventDefault();
-            }}
+            onSubmit={handleSubmit}
         >
             <div className="flex w-full">
                 <div className="flex bg-neutral-100 text-neutral-500 transition dark:border-neutral-700 dark:bg-neutral-900">
@@ -22,6 +33,7 @@ const LinkInput = () => {
                                 : "hover:bg-neutral-200 dark:hover:bg-neutral-800"
                         )}
                         onClick={() => setIsTrack(true)}
+                        type="button"
                     >
                         Track
                     </button>
@@ -33,6 +45,7 @@ const LinkInput = () => {
                                 : "hover:bg-neutral-200 dark:hover:bg-neutral-800"
                         )}
                         onClick={() => setIsTrack(false)}
+                        type="button"
                     >
                         Album
                     </button>
@@ -44,8 +57,12 @@ const LinkInput = () => {
                     value={inputLink}
                     onChange={(e) => setInputLink(e.target.value)}
                 />
-                <button className="bg-neutral-100 px-4 py-2 text-neutral-800 transition hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800">
-                    Submit
+                <button
+                    className="bg-neutral-100 px-4 py-2 text-neutral-800 transition hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                    disabled={isLoading}
+                    type="submit"
+                >
+                    {isLoading ? "Loading..." : "Submit"}
                 </button>
             </div>
         </form>

@@ -4,16 +4,16 @@ import { withAlphaMix } from "@/utils/colors";
 
 type ArtworkCardProps =
     | {
-          responseType: "tracks";
+          responseType: "track";
           linkResponse: TrackResponse;
       }
     | {
-          responseType: "albums";
+          responseType: "album";
           linkResponse: AlbumResponse;
       };
 const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
     const title =
-        responseType === "tracks"
+        responseType === "track"
             ? linkResponse.songName
             : linkResponse.albumName;
     const { artistNames, artworkUrl } = linkResponse;

@@ -21,12 +21,15 @@ export function useStreamingQuery<T extends TrackOrAlbum>(
             const reqBody = JSON.stringify(
                 type === "track" ? { trackUrl: url } : { albumUrl: url }
             );
-            const res = await fetch(`${API_URL}/api/UrlConversion/${type}s`, {
+            const reqUrl = `${API_URL}/api/UrlConversion/${type}s`;
+            console.log(`making req at ${reqUrl}`);
+            const res = await fetch(reqUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json-patch+json" },
                 body: reqBody,
             });
             return res.json();
         },
+        enabled: url.length > 0,
     });
 }

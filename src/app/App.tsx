@@ -5,10 +5,35 @@ import ThemeButtons from "@/components/ui/ThemeButtons";
 import LinkInput from "@/components/sections/LinkInput";
 import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 import { useState } from "react";
+import { useStreamingQuery } from "@/hooks/useConvertStreamingUrl";
+import type { TrackOrAlbum } from "@/types/streamingPlatforms";
+
+interface SubmittedQuery {
+    url: string;
+    type: TrackOrAlbum;
+}
 
 export default function App() {
-    const linkResponse = placeholderResponse;
     const [tempButton, setTempButton] = useState(true);
+
+    const [submittedQuery, setSubmittedQuery] = useState<SubmittedQuery>({
+        url: "",
+        type: "track",
+    });
+
+    const { data, isLoading, error, status } = useStreamingQuery(
+        submittedQuery?.url ?? "",
+        submittedQuery?.type ?? "track"
+    );
+
+    if (error) {
+        console.log(`query error: ${error}`);
+    }
+
+    const handleSubmit = (url: string, type: TrackOrAlbum) => {
+        setSubmittedQuery({ url, type });
+    };
+    const linkResponse = data ?? placeholderResponse;
 
     return (
         <div className="dark:bg-neutral-850 font-inter relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-neutral-50 transition dark:bg-neutral-950">
@@ -44,7 +69,10 @@ export default function App() {
                                 damping: 30,
                             }}
                         >
-                            <LinkInput />
+                            <LinkInput
+                                onSubmit={handleSubmit}
+                                isLoading={isLoading}
+                            />
                         </motion.div>
                         <AnimatePresence mode="popLayout">
                             {tempButton && (
@@ -56,7 +84,7 @@ export default function App() {
                                     className="flex flex-col items-center justify-center gap-8 p-6"
                                 >
                                     <ArtworkCard
-                                        responseType="tracks"
+                                        responseType={submittedQuery.type}
                                         linkResponse={linkResponse}
                                     />
                                     <StreamingLinks
