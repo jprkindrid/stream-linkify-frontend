@@ -7,6 +7,7 @@ import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 import { useState } from "react";
 import { useStreamingQuery } from "@/hooks/useConvertStreamingUrl";
 import type { TrackOrAlbum } from "@/types/streamingPlatforms";
+import { type QueryStatus } from "@tanstack/react-query";
 
 interface SubmittedQuery {
     url: string;
@@ -14,8 +15,6 @@ interface SubmittedQuery {
 }
 
 export default function App() {
-    const [tempButton, setTempButton] = useState(true);
-
     const [submittedQuery, setSubmittedQuery] = useState<SubmittedQuery>({
         url: "",
         type: "track",
@@ -34,6 +33,9 @@ export default function App() {
         setSubmittedQuery({ url, type });
     };
     const linkResponse = data ?? placeholderResponse;
+    const [devOverride, setDevOverride] = useState<QueryStatus | null>(null);
+    const displayStatus = devOverride ?? status;
+    const showResults = displayStatus == "success";
 
     return (
         <div className="dark:bg-neutral-850 font-inter relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-neutral-50 transition dark:bg-neutral-950">
@@ -46,10 +48,10 @@ export default function App() {
                         {/* Spacer for animation reasons in lieu of a justify-center */}
 
                         <motion.div
-                            animate={{ height: tempButton ? "20vh" : "40vh" }}
+                            animate={{ height: showResults ? "20vh" : "40vh" }}
                             transition={{ duration: 0.3, ease: "easeOut" }}
                         />
-                        {!tempButton && (
+                        {!showResults && (
                             <div className="flex flex-col items-center gap-2">
                                 <p className="text-2xl font-bold">
                                     Paste a link to get started
@@ -62,7 +64,7 @@ export default function App() {
                         )}
                         <motion.div
                             layout
-                            animate={{ scale: tempButton ? 0.8 : 1 }}
+                            animate={{ scale: showResults ? 0.8 : 1 }}
                             transition={{
                                 type: "spring",
                                 stiffness: 300,
@@ -75,7 +77,7 @@ export default function App() {
                             />
                         </motion.div>
                         <AnimatePresence mode="popLayout">
-                            {tempButton && (
+                            {displayStatus == "success" && (
                                 <motion.div
                                     layout
                                     initial={{ opacity: 0, scale: 0.95 }}
@@ -98,12 +100,34 @@ export default function App() {
                     </div>
                 </LayoutGroup>
             </div>
-            <button
-                className="bg-accent absolute top-0 left-0 p-1"
-                onClick={() => setTempButton(!tempButton)}
-            >
-                Transition
-            </button>
+            {/* Dev controls */}
+            {import.meta.env.DEV && (
+                <div className="fixed bottom-4 left-4 flex gap-1 rounded bg-neutral-800 p-1 text-sm">
+                    <button
+                        onClick={() => setDevOverride(null)}
+                        className={`rounded px-2 py-1 ${
+                            devOverride === null
+                                ? "bg-accent text-white"
+                                : "text-neutral-400 hover:text-white"
+                        }`}
+                    >
+                        real
+                    </button>
+                    {(["pending", "success", "error"] as const).map((s) => (
+                        <button
+                            key={s}
+                            onClick={() => setDevOverride(s)}
+                            className={`rounded px-2 py-1 ${
+                                devOverride === s
+                                    ? "bg-accent text-white"
+                                    : "text-neutral-400 hover:text-white"
+                            }`}
+                        >
+                            {s}
+                        </button>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

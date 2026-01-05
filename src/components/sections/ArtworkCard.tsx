@@ -1,21 +1,20 @@
 import { useAccentContext } from "@/providers/accentProviders";
-import type { AlbumResponse, TrackResponse } from "@/types/streamingPlatforms";
+import type {
+    AlbumResponse,
+    TrackOrAlbum,
+    TrackResponse,
+} from "@/types/streamingPlatforms";
 import { withAlphaMix } from "@/utils/colors";
 
-type ArtworkCardProps =
-    | {
-          responseType: "track";
-          linkResponse: TrackResponse;
-      }
-    | {
-          responseType: "album";
-          linkResponse: AlbumResponse;
-      };
+type ArtworkCardProps = {
+    responseType: TrackOrAlbum;
+    linkResponse: TrackResponse | AlbumResponse;
+};
 const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
     const title =
         responseType === "track"
-            ? linkResponse.songName
-            : linkResponse.albumName;
+            ? (linkResponse as TrackResponse).songName
+            : (linkResponse as AlbumResponse).albumName;
     const { artistNames, artworkUrl } = linkResponse;
     const { accentColor } = useAccentContext();
 
