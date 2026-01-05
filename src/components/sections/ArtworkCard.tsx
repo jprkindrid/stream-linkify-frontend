@@ -4,7 +4,12 @@ import type {
     TrackOrAlbum,
     TrackResponse,
 } from "@/types/streamingPlatforms";
-import { withAlphaMix } from "@/utils/colors";
+import {
+    boostVibrancy,
+    getAverageColorFromImage,
+    withAlphaMix,
+} from "@/utils/colors";
+import { useEffect } from "react";
 
 type ArtworkCardProps = {
     responseType: TrackOrAlbum;
@@ -16,7 +21,23 @@ const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
             ? (linkResponse as TrackResponse).songName
             : (linkResponse as AlbumResponse).albumName;
     const { artistNames, artworkUrl } = linkResponse;
-    const { accentColor } = useAccentContext();
+    const { accentColor, setAccentColor } = useAccentContext();
+
+    useEffect(() => {
+        if (!linkResponse.artworkUrl || linkResponse.artworkUrl === "") return;
+
+        const extractColor = async () => {
+            try {
+                const color = await getAverageColorFromImage(
+                    linkResponse.artworkUrl
+                );
+                setAccentColor(boostVibrancy(color));
+            } catch (err) {
+                console.error("Failed to extract color:", err);
+            }
+        };
+        extractColor();
+    }, [linkResponse.artworkUrl, setAccentColor]);
 
     return (
         <div
