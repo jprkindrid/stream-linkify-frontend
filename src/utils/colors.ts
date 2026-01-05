@@ -6,7 +6,7 @@ export type LCH = {
     h: number;
 };
 
-export const tempAccent: LCH = {
+export const defaultAccent: LCH = {
     l: 0.72,
     c: 0.185,
     h: 49.63,
@@ -24,10 +24,10 @@ export const withAlphaMix = (color: LCH, alpha: number) => {
     return `color-mix(in oklch, ${lchToString(color)} ${alpha * 100}%, transparent)`;
 };
 
-export function boostVibrancy(color: LCH): LCH {
+function boostVibrancy(color: LCH): LCH {
     return {
-        l: Math.max(0.5, Math.min(0.75, color.l)),
-        c: Math.max(color.c * 1.4, 0.12),
+        l: Math.max(0.55, Math.min(0.7, color.l)),
+        c: Math.max(color.c * 2, 0.18), // Bump these up
         h: color.h,
     };
 }
@@ -59,17 +59,36 @@ export async function getAverageColorFromImage(imageUrl: string): Promise<LCH> {
         g = 0,
         b = 0;
 
-    let pixelCount = 0;
+    let totalWeight = 0;
 
     for (let i = 0; i < data.length; i += 4) {
-        r += data[i];
-        g += data[i + 1];
-        b += data[i + 2];
-        // i + 3 is alpha and I dont care
-        pixelCount++;
+        const pr = data[i];
+        const pg = data[i + 1];
+        const pb = data[i + 2];
+
+        // Skip Near Blacks
+        const brightness = (pr + pg + pb) / 3;
+        if (brightness < 40) continue;
+
+        // Weight by saturation - more colorful pixels count more
+        const max = Math.max(pr, pg, pb);
+        const min = Math.min(pr, pg, pb);
+        const saturation = max === 0 ? 0 : (max - min) / max;
+
+        if (saturation < 0.1) continue; // Skip grays
+
+        // We really, really want the saturation to dominate
+        const weight = saturation ** 10;
+
+        r += pr * weight;
+        g += pg * weight;
+        b += pb * weight;
+        totalWeight += weight;
     }
 
-    const rgbValue = (val: number) => val / pixelCount / 255;
+    if (totalWeight === 0) return defaultAccent;
+
+    const rgbValue = (val: number) => val / totalWeight / 255;
 
     const color = toOklch({
         mode: "rgb",
@@ -80,9 +99,9 @@ export async function getAverageColorFromImage(imageUrl: string): Promise<LCH> {
 
     if (!color) throw new Error("Failed to convert color");
 
-    return {
+    return boostVibrancy({
         l: color.l,
         c: color.c,
         h: color.h ?? 0,
-    };
+    });
 }
