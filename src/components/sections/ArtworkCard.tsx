@@ -5,7 +5,7 @@ import type {
     TrackResponse,
 } from "@/types/streamingPlatforms";
 import {
-    boostVibrancy,
+    defaultAccent,
     getAverageColorFromImage,
     withAlphaMix,
 } from "@/utils/colors";
@@ -22,16 +22,20 @@ const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
             : (linkResponse as AlbumResponse).albumName;
     const { artistNames, artworkUrl } = linkResponse;
     const { accentColor, setAccentColor } = useAccentContext();
+    console.log(`ARTWORK: ${linkResponse.artworkUrl ?? "none"}`);
 
     useEffect(() => {
-        if (!linkResponse.artworkUrl || linkResponse.artworkUrl === "") return;
+        if (!linkResponse.artworkUrl || linkResponse.artworkUrl === "") {
+            setAccentColor(defaultAccent);
+            return;
+        }
 
         const extractColor = async () => {
             try {
                 const color = await getAverageColorFromImage(
                     linkResponse.artworkUrl
                 );
-                setAccentColor(boostVibrancy(color));
+                setAccentColor(color);
             } catch (err) {
                 console.error("Failed to extract color:", err);
             }
@@ -43,7 +47,7 @@ const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
         <div
             className="w-full max-w-sm overflow-hidden bg-white text-start shadow-xl dark:bg-neutral-800"
             style={{
-                boxShadow: `0 8px 30px ${withAlphaMix(accentColor, 0.25)}`,
+                boxShadow: `0 8px 30px ${withAlphaMix(accentColor, 0.4)}`,
             }}
         >
             <img

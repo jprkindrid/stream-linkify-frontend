@@ -1,19 +1,19 @@
 import { StreamingPlatformIcon } from "@/components/icons/StreamingPlatformIcon";
+import { useAccentContext } from "@/providers/accentProviders";
 import {
     StreamingPlatforms,
     type StreamingPlatform,
 } from "@/types/streamingPlatforms";
-import { tempAccent, withAlphaMix } from "@/utils/colors";
+import { withAlphaMix } from "@/utils/colors";
 
 type LinkButtonProps = {
     platform: StreamingPlatform;
     url: string;
 };
 
-const accentColor = tempAccent;
-
 const LinkButton = ({ platform, url }: LinkButtonProps) => {
     if (!url) return null;
+    const { accentColor } = useAccentContext();
     return (
         <a
             href={url}

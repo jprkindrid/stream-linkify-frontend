@@ -1,4 +1,4 @@
-import { tempAccent, type LCH } from "@/utils/colors";
+import { defaultAccent, type LCH } from "@/utils/colors";
 import {
     createContext,
     useContext,
@@ -15,7 +15,7 @@ type AccentContextType = {
 const AccentContext = createContext<AccentContextType | undefined>(undefined);
 
 export const AccentProvider = ({ children }: { children: ReactNode }) => {
-    const [accentColor, setAccentColor] = useState<LCH>(tempAccent);
+    const [accentColor, setAccentColor] = useState<LCH>(defaultAccent);
 
     useLayoutEffect(() => {
         const { l, c, h } = accentColor;
