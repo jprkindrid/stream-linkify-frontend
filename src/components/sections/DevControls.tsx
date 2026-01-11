@@ -1,5 +1,6 @@
 import type { QueryStatus } from "@tanstack/react-query";
 import type { Dispatch, SetStateAction } from "react";
+import clsx from "clsx";
 
 interface DevControlsProps {
     setDevOverride: Dispatch<SetStateAction<QueryStatus | null>>;
@@ -8,14 +9,15 @@ interface DevControlsProps {
 
 const DevControls = ({ setDevOverride, devOverride }: DevControlsProps) => {
     return (
-        <div className="fixed bottom-4 left-4 flex gap-1 rounded bg-neutral-800 p-1 text-sm">
+        <div className="fixed bottom-4 left-4 flex gap-1 rounded bg-neutral-800 text-sm">
             <button
                 onClick={() => setDevOverride(null)}
-                className={`rounded px-2 py-1 ${
+                className={clsx(
+                    "rounded px-2 py-1",
                     devOverride === null
-                        ? "bg-accent text-white"
+                        ? "bg-white text-neutral-900"
                         : "text-neutral-400 hover:text-white"
-                }`}
+                )}
             >
                 real
             </button>
@@ -23,11 +25,12 @@ const DevControls = ({ setDevOverride, devOverride }: DevControlsProps) => {
                 <button
                     key={s}
                     onClick={() => setDevOverride(s)}
-                    className={`rounded px-2 py-1 ${
+                    className={clsx(
+                        "rounded px-2 py-1",
                         devOverride === s
-                            ? "bg-accent text-white"
+                            ? "bg-white text-neutral-900"
                             : "text-neutral-400 hover:text-white"
-                    }`}
+                    )}
                 >
                     {s}
                 </button>
