@@ -56,18 +56,19 @@ export default function App() {
     const showResults = displayStatus == "success";
 
     return (
-        <div className="dark:bg-neutral-850 font-inter relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-neutral-50 transition dark:bg-neutral-950">
-            <div className="w-full max-w-4xl">
-                <div className="flex justify-center py-4 md:absolute md:top-4 md:right-8">
-                    <ThemeButtons />
-                </div>
+        <div className="dark:bg-neutral-850 font-inter relative flex min-h-screen w-full flex-col items-center justify-center bg-neutral-50 transition dark:bg-neutral-950">
+            <div className="flex w-full max-w-4xl flex-1 flex-col justify-center">
                 <LayoutGroup>
-                    <div className="flex min-h-screen flex-col items-center gap-8">
-                        {/* Spacer for animation reasons in lieu of a justify-center */}
-
+                    <div className="flex flex-1 flex-col items-center justify-center gap-8">
+                        <div className="absolute top-4 right-4 sm:top-8 sm:right-8 md:top-4 md:right-8">
+                            <ThemeButtons />
+                        </div>
                         <motion.div
-                            animate={{ height: showResults ? "20vh" : "40vh" }}
+                            animate={{
+                                flex: showResults ? "1 1 auto" : "0 0 auto",
+                            }}
                             transition={{ duration: 0.3, ease: "easeOut" }}
+                            className={showResults ? "pt-12" : ""}
                         />
                         {!showResults && <HeroText />}
                         <motion.div
@@ -102,7 +103,6 @@ export default function App() {
                     </div>
                 </LayoutGroup>
             </div>
-            {/* Dev controls */}
             {import.meta.env.DEV && (
                 <DevControls
                     setDevOverride={setDevOverride}
