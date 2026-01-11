@@ -3,7 +3,7 @@ import StreamingLinks from "@/components/sections/StreamingLinks";
 import ArtworkCard from "@/components/sections/ArtworkCard";
 import ThemeButtons from "@/components/ui/ThemeButtons";
 import LinkInput from "@/components/sections/LinkInput";
-import { AnimatePresence, motion, LayoutGroup, spring } from "motion/react";
+import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 import type { Transition, MotionProps } from "motion/react";
 import { useState } from "react";
 import { useStreamingQuery } from "@/hooks/useConvertStreamingUrl";
