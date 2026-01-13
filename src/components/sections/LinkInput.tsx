@@ -20,51 +20,49 @@ const LinkInput = ({ onSubmit, isLoading }: LinkInputProps) => {
 
     return (
         <form
-            className="flex w-2xl flex-col items-center"
+            className="mx-2 box-border flex gap-0 overflow-hidden sm:mx-4"
             onSubmit={handleSubmit}
         >
-            <div className="flex w-full">
-                <div className="flex bg-neutral-100 text-neutral-500 transition dark:border-neutral-700 dark:bg-neutral-900">
-                    <button
-                        className={clsx(
-                            "px-3 py-2 transition",
-                            isTrack
-                                ? "bg-accent text-neutral-100"
-                                : "hover:bg-neutral-200 dark:hover:bg-neutral-800"
-                        )}
-                        onClick={() => setIsTrack(true)}
-                        type="button"
-                    >
-                        Track
-                    </button>
-                    <button
-                        className={clsx(
-                            "px-3 py-2 transition",
-                            !isTrack
-                                ? "bg-accent text-neutral-100"
-                                : "hover:bg-neutral-200 dark:hover:bg-neutral-800"
-                        )}
-                        onClick={() => setIsTrack(false)}
-                        type="button"
-                    >
-                        Album
-                    </button>
-                </div>
-                <input
-                    className="focus-visible:ring-accent flex-1 bg-neutral-300 p-2 text-neutral-800 placeholder:text-neutral-500 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset dark:bg-neutral-700 dark:text-neutral-200"
-                    type="text"
-                    placeholder="https://music.apple.com/us/song/..."
-                    value={inputLink}
-                    onChange={(e) => setInputLink(e.target.value)}
-                />
+            <div className="flex bg-neutral-100 text-neutral-500 transition dark:border-neutral-700 dark:bg-neutral-900">
                 <button
-                    className="bg-neutral-100 px-4 py-2 text-neutral-800 transition hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
-                    disabled={isLoading}
-                    type="submit"
+                    className={clsx(
+                        "px-3 py-2 transition",
+                        isTrack
+                            ? "bg-accent text-neutral-100"
+                            : "hover:bg-neutral-200 dark:hover:bg-neutral-800"
+                    )}
+                    onClick={() => setIsTrack(true)}
+                    type="button"
                 >
-                    {isLoading ? "Loading..." : "Submit"}
+                    Track
+                </button>
+                <button
+                    className={clsx(
+                        "px-3 py-2 transition",
+                        !isTrack
+                            ? "bg-accent text-neutral-100"
+                            : "hover:bg-neutral-200 dark:hover:bg-neutral-800"
+                    )}
+                    onClick={() => setIsTrack(false)}
+                    type="button"
+                >
+                    Album
                 </button>
             </div>
+            <input
+                className="focus-visible:ring-accent min-w-0 flex-1 bg-neutral-300 p-2 text-neutral-800 placeholder:text-neutral-500 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset dark:bg-neutral-700 dark:text-neutral-200"
+                type="text"
+                placeholder="https://music.apple.com/us/song/..."
+                value={inputLink}
+                onChange={(e) => setInputLink(e.target.value)}
+            />
+            <button
+                className="flex-shrink-0 bg-neutral-100 px-2 py-2 text-neutral-800 transition hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                disabled={isLoading}
+                type="submit"
+            >
+                {isLoading ? "Loading..." : "Submit"}
+            </button>
         </form>
     );
 };

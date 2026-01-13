@@ -9,7 +9,7 @@ interface DevControlsProps {
 
 const DevControls = ({ setDevOverride, devOverride }: DevControlsProps) => {
     return (
-        <div className="fixed bottom-4 left-4 flex gap-1 rounded bg-neutral-800 text-sm">
+        <div className="absolute bottom-4 left-4 flex gap-1 rounded bg-neutral-800 text-sm">
             <button
                 onClick={() => setDevOverride(null)}
                 className={clsx(

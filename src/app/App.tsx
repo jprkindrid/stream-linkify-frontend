@@ -11,6 +11,7 @@ import type { TrackOrAlbum } from "@/types/streamingPlatforms";
 import { type QueryStatus } from "@tanstack/react-query";
 import HeroText from "@/components/sections/HeroText";
 import DevControls from "@/components/sections/DevControls";
+import clsx from "clsx";
 
 interface SubmittedQuery {
     url: string;
@@ -57,24 +58,23 @@ export default function App() {
 
     return (
         <div className="dark:bg-neutral-850 font-inter relative flex min-h-screen w-full flex-col items-center justify-center bg-neutral-50 transition dark:bg-neutral-950">
-            <div className="flex w-full max-w-4xl flex-1 flex-col justify-center">
+            <div className="absolute top-4 right-4 sm:top-8 sm:right-8 md:top-4 md:right-8">
+                <ThemeButtons />
+            </div>
+            <div
+                className={clsx(
+                    "relative flex h-full w-full max-w-4xl flex-col justify-center",
+                    showResults && "mt-20"
+                )}
+            >
                 <LayoutGroup>
-                    <div className="flex flex-1 flex-col items-center justify-center gap-8">
-                        <div className="absolute top-4 right-4 sm:top-8 sm:right-8 md:top-4 md:right-8">
-                            <ThemeButtons />
-                        </div>
-                        <motion.div
-                            animate={{
-                                flex: showResults ? "1 1 auto" : "0 0 auto",
-                            }}
-                            transition={{ duration: 0.3, ease: "easeOut" }}
-                            className={showResults ? "pt-12" : ""}
-                        />
+                    <div className="flex max-h-screen w-full flex-col items-center justify-center gap-4 overflow-y-auto sm:gap-8">
                         {!showResults && <HeroText />}
                         <motion.div
                             layout
                             animate={{ scale: showResults ? 0.8 : 1 }}
                             transition={springTransition}
+                            className="w-full"
                         >
                             <LinkInput
                                 onSubmit={handleSubmit}

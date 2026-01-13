@@ -45,7 +45,7 @@ const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
 
     return (
         <div
-            className="w-full max-w-sm overflow-hidden bg-white text-start shadow-xl dark:bg-neutral-800"
+            className="w-full max-w-sm flex-1 overflow-hidden bg-white text-start shadow-xl dark:bg-neutral-800"
             style={{
                 boxShadow: `0 8px 30px ${withAlphaMix(accentColor, 0.4)}`,
             }}
