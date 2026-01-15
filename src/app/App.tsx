@@ -40,23 +40,22 @@ export default function App() {
         type: "track",
     });
 
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+
     const { data, isLoading, error, status } = useStreamingQuery(
         submittedQuery?.url ?? "",
         submittedQuery?.type ?? "track"
     );
 
-    if (error) {
-        console.log(`query error: ${error}`);
-    }
-
     const handleSubmit = (url: string, type: TrackOrAlbum) => {
         setSubmittedQuery({ url, type });
+        setHasSubmitted(true);
     };
 
     const linkResponse = data ?? placeholderResponse;
 
     const [devOverride, setDevOverride] = useState<QueryStatus | null>(null);
-    const displayStatus = devOverride ?? status;
+    const displayStatus = devOverride ?? (hasSubmitted ? status : null);
     const showResults = displayStatus != null;
 
     return (

@@ -1,8 +1,3 @@
-import { StreamingPlatforms } from "@/types/streamingPlatforms";
-import { useAccentContext } from "@/providers/accentProviders";
-import { withAlphaMix } from "@/utils/colors";
-import { StreamingPlatformIcon } from "@/components/icons/StreamingPlatformIcon";
-
 const LinkSkeleton = () => {
     return (
         <div className="flex flex-col items-center justify-center gap-8 p-6">
