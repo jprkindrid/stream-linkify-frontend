@@ -7,9 +7,9 @@ const LinkSkeleton = () => {
                         <a
                             target="_blank"
                             rel="noreferrer"
-                            className="shadow-accent group flex flex-col items-center gap-1.5 p-3 transition-all hover:-translate-y-1 hover:shadow-lg"
+                            className="shadow-accent group flex flex-col items-center gap-2 transition-all hover:-translate-y-1 hover:shadow-lg"
                         >
-                            <div className="h-18 w-18 bg-neutral-200/50 text-start shadow-xl dark:bg-neutral-700/50"></div>
+                            <div className="mx-1.5 h-21 w-21 bg-neutral-200/50 text-start shadow-xl dark:bg-neutral-700/50"></div>
                         </a>
                     );
                 })}
