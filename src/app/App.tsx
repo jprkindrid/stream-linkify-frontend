@@ -14,6 +14,7 @@ import DevControls from "@/components/sections/DevControls";
 import clsx from "clsx";
 import ArtworkSkeleton from "@/components/sections/ArtworkSkeleton";
 import LinkSkeleton from "@/components/sections/LinkSkeleton";
+import ErrorState from "@/components/sections/ErrorState";
 
 interface SubmittedQuery {
     url: string;
@@ -110,6 +111,12 @@ export default function App() {
                                     <ArtworkSkeleton />
                                     <LinkSkeleton />
                                 </motion.div>
+                            )}
+                            {displayStatus == "error" && (
+                                <ErrorState
+                                    error={error ?? "unknown error"}
+                                    fadeScale={fadeScale}
+                                />
                             )}
                         </AnimatePresence>
                     </div>
