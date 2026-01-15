@@ -56,7 +56,7 @@ const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
                 className="aspect-square w-full object-cover"
             />
             <div className="p-4">
-                <p className="dark:text-neural-400 text-sm font-medium text-neutral-500">
+                <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
                     {artistNames.join(", ")}
                 </p>
                 <h2 className="text-xl font-bold text-neutral-900 dark:text-white">

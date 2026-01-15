@@ -12,6 +12,8 @@ import { type QueryStatus } from "@tanstack/react-query";
 import HeroText from "@/components/sections/HeroText";
 import DevControls from "@/components/sections/DevControls";
 import clsx from "clsx";
+import ArtworkSkeleton from "@/components/sections/ArtworkSkeleton";
+import LinkSkeleton from "@/components/sections/LinkSkeleton";
 
 interface SubmittedQuery {
     url: string;
@@ -54,7 +56,7 @@ export default function App() {
 
     const [devOverride, setDevOverride] = useState<QueryStatus | null>(null);
     const displayStatus = devOverride ?? status;
-    const showResults = displayStatus == "success";
+    const showResults = displayStatus != null;
 
     return (
         <div className="dark:bg-neutral-850 font-inter relative flex min-h-screen w-full flex-col items-center justify-center bg-neutral-50 transition dark:bg-neutral-950">
@@ -97,6 +99,16 @@ export default function App() {
                                             linkResponse.streamingServices
                                         }
                                     />
+                                </motion.div>
+                            )}
+                            {displayStatus == "pending" && (
+                                <motion.div
+                                    layout
+                                    {...fadeScale}
+                                    className="flex flex-col items-center justify-center gap-8 p-6"
+                                >
+                                    <ArtworkSkeleton />
+                                    <LinkSkeleton />
                                 </motion.div>
                             )}
                         </AnimatePresence>

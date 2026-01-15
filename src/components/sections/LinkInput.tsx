@@ -57,7 +57,7 @@ const LinkInput = ({ onSubmit, isLoading }: LinkInputProps) => {
                 onChange={(e) => setInputLink(e.target.value)}
             />
             <button
-                className="flex-shrink-0 bg-neutral-100 px-2 py-2 text-neutral-800 transition hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                className="shrink-0 bg-neutral-100 px-2 py-2 text-neutral-800 transition hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
                 disabled={isLoading}
                 type="submit"
             >
