@@ -25,7 +25,7 @@ export function useStreamingQuery<T extends TrackOrAlbum>(
             console.log(`making req at ${reqUrl}`);
             const res = await fetch(reqUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/json-patch+json" },
+                headers: { "Content-Type": "application/json" },
                 body: reqBody,
             });
 
