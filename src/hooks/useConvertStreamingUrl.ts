@@ -28,6 +28,13 @@ export function useStreamingQuery<T extends TrackOrAlbum>(
                 headers: { "Content-Type": "application/json-patch+json" },
                 body: reqBody,
             });
+
+            if (!res.ok) {
+                const error = await res.json();
+                console.log(error);
+                throw new Error(error.error || "Failed to fetch");
+            }
+
             return res.json();
         },
         enabled: url.length > 0,

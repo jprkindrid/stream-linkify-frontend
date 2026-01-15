@@ -47,6 +47,8 @@ export default function App() {
         submittedQuery?.type ?? "track"
     );
 
+    if (error) console.log(error);
+
     const handleSubmit = (url: string, type: TrackOrAlbum) => {
         setSubmittedQuery({ url, type });
         setHasSubmitted(true);
