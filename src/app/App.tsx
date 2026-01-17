@@ -5,7 +5,7 @@ import ThemeButtons from "@/components/ui/ThemeButtons";
 import LinkInput from "@/components/sections/LinkInput";
 import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 import type { Transition, MotionProps } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStreamingQuery } from "@/hooks/useConvertStreamingUrl";
 import type { TrackOrAlbum } from "@/types/streamingPlatforms";
 import { type QueryStatus } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ import clsx from "clsx";
 import ArtworkSkeleton from "@/components/sections/ArtworkSkeleton";
 import LinkSkeleton from "@/components/sections/LinkSkeleton";
 import ErrorState from "@/components/sections/ErrorState";
+import { API_URL } from "@/config/environment";
 
 interface SubmittedQuery {
     url: string;
@@ -35,6 +36,12 @@ const springTransition = {
 } satisfies Transition;
 
 export default function App() {
+    useEffect(() => {
+        fetch(`${API_URL}/health`).catch(() => {
+            console.log("Wake ping unsuccessful");
+        });
+    }, []);
+
     const [submittedQuery, setSubmittedQuery] = useState<SubmittedQuery>({
         url: "",
         type: "track",
