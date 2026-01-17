@@ -5,8 +5,15 @@ import App from "./app/App";
 import "./index.css";
 import { ThemeProvider } from "./providers/themeProvider";
 import { AccentProvider } from "./providers/accentProviders";
+import { API_URL } from "./config/environment";
 
 const queryClient = new QueryClient();
+
+setTimeout(() => {
+    fetch(`${API_URL}/health`).catch(() => {
+        console.log("Wake ping unsuccessful");
+    });
+}, 100);
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
