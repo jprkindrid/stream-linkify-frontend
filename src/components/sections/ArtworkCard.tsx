@@ -22,7 +22,6 @@ const ArtworkCard = ({ responseType, linkResponse }: ArtworkCardProps) => {
             : (linkResponse as AlbumResponse).albumName;
     const { artistNames, artworkUrl } = linkResponse;
     const { accentColor, setAccentColor } = useAccentContext();
-    console.log(`ARTWORK: ${linkResponse.artworkUrl ?? "none"}`);
 
     useEffect(() => {
         if (!linkResponse.artworkUrl || linkResponse.artworkUrl === "") {

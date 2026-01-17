@@ -22,7 +22,6 @@ export function useStreamingQuery<T extends TrackOrAlbum>(
                 type === "track" ? { trackUrl: url } : { albumUrl: url }
             );
             const reqUrl = `${API_URL}/api/UrlConversion/${type}s`;
-            console.log(`making req at ${reqUrl}`);
             const res = await fetch(reqUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

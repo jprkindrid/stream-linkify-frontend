@@ -7,19 +7,19 @@ import {
 import type { ComponentType, SVGProps } from "react";
 import clsx from "clsx";
 
-type ThemeButton = {
+interface ThemeButton {
     mode: ThemeMode;
     Icon: ComponentType<SVGProps<SVGSVGElement>>;
-};
+}
+
+const buttons: ThemeButton[] = [
+    { mode: "light", Icon: SunIcon },
+    { mode: "dark", Icon: MoonIcon },
+    { mode: "system", Icon: ComputerDesktopIcon },
+];
 
 const ThemeButtons = () => {
     const { theme, setTheme } = useThemeContext();
-
-    const buttons: ThemeButton[] = [
-        { mode: "light", Icon: SunIcon },
-        { mode: "dark", Icon: MoonIcon },
-        { mode: "system", Icon: ComputerDesktopIcon },
-    ];
 
     return (
         <div className="flex flex-row justify-between gap-2 transition">
