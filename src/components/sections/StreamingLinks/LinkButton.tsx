@@ -16,7 +16,7 @@ const LinkButton = ({ platform, url }: LinkButtonProps) => {
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="group shadow-accent flex w-24 flex-col items-center gap-1.5 p-3 transition-all hover:-translate-y-1 hover:shadow-lg"
+            className="group shadow-accent flex w-20 flex-col items-center gap-1.5 p-3 transition-all hover:-translate-y-1 hover:shadow-lg md:w-26"
         >
             <StreamingPlatformIcon
                 platform={platform}

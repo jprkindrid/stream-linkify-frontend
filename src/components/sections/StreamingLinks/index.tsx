@@ -13,7 +13,7 @@ const StreamingLinks = ({ streamingServices }: StreamingLinksProps) => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-8 p-6">
-            <div className="sm:grid-cold-5 grid w-full max-w-md grid-cols-4 gap-3">
+            <div className="grid w-full max-w-md grid-cols-4 gap-3">
                 {platforms.map((platform) => {
                     return (
                         <LinkButton
