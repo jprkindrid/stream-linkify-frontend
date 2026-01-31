@@ -3,6 +3,7 @@ export const StreamingPlatforms = {
     AppleMusic: "AppleMusic",
     Deezer: "Deezer",
     Tidal: "Tidal",
+    Soundcloud: "Soundcloud",
 } as const;
 
 export type StreamingPlatform =

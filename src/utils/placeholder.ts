@@ -9,6 +9,7 @@ export const placeholderResponse: TrackResponse = {
             "https://music.apple.com/us/album/long-night-of-solace/1801233821?i=1801233826",
         Deezer: "https://www.deezer.com/track/3271569911",
         Tidal: "https://listen.tidal.com/track/422990078",
+        Soundcloud: "https://soundcloud.com/kindridmusic/long-night-of-solace",
     },
     artworkUrl:
         "https://i.scdn.co/image/ab67616d0000b273146c5a8b9da16e9072279041",

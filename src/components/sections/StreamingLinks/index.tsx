@@ -10,10 +10,11 @@ type StreamingLinksProps = {
 
 const StreamingLinks = ({ streamingServices }: StreamingLinksProps) => {
     const platforms = Object.values(StreamingPlatforms);
-
+    const entryCount = Object.values(streamingServices).filter(Boolean).length;
+    const cols = entryCount % 4 === 1 ? "grid-cols-3" : "grid-cols-4";
     return (
         <div className="flex flex-col items-center justify-center gap-8 p-6">
-            <div className="grid w-full max-w-md grid-cols-4 gap-3">
+            <div className={`grid ${cols} w-full max-w-md gap-3`}>
                 {platforms.map((platform) => {
                     return (
                         <LinkButton
